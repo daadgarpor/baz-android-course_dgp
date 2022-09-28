@@ -27,17 +27,9 @@ import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun CriptoScreen(navController: NavHostController, listaCriptos: List<Payload>) {
+fun CriptoScreen(navController: NavHostController, list: List<Payload>?) {
 
-            showLista(listaCriptos, navController)
-
-}
-
-
-
-
-@Composable
-fun showLista(payload: List<Payload>, navController: NavHostController) {
+    Text(text = "ghoasdosd")
     val imagelogo = painterResource(R.drawable.bitso)
     Column {
         Card(
@@ -56,12 +48,18 @@ fun showLista(payload: List<Payload>, navController: NavHostController) {
                 .fillMaxSize()
                 .align(Alignment.CenterHorizontally),
         ) {
-            items(payload) { cripto ->
+            items(list!!) { cripto ->
                 CriptoCard(cripto, navController)
             }
         }
     }
+
 }
+
+
+
+
+
 
 @Composable
 fun CriptoCard(cripto: Payload, navController: NavHostController) {
