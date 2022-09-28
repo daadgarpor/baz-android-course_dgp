@@ -7,6 +7,8 @@ import com.example.criptobitsoproyectwz.core.CriptoResult
 import com.example.criptobitsoproyectwz.data.Repository.useCaseCripto
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.domain.Cripto
+import com.example.criptobitsoproyectwz.domain.usesCase.useCaseCriptoDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,15 +25,22 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class ViewModelCripto @Inject constructor (private val getCriptoUseCase: useCaseCripto) : ViewModel() {
+class ViewModelCripto @Inject constructor (
+    private val getCriptoUseCase: useCaseCripto,
+    private val getCriptoFromDatabaseUseCase: useCaseCriptoDatabase
+    ) : ViewModel() {
 
     /*** Flow
      * Cualquier objeto que permita que Jetpack Compose se adhiera a
      * cada cambio puede convertirse en State<T> y leerse mediante un elemento que admite composición.
      * manipular informacion, Capa de presentacion
      */
-    private val _dataCripto = MutableLiveData<CriptoResult<BaseResult>>()
-    val dataCripto: LiveData<CriptoResult<BaseResult>> = _dataCripto
+    private val _dataCripto = MutableLiveData<CriptoResult<List<Cripto>>>()
+    val dataCripto: LiveData<CriptoResult<List<Cripto>>>  = _dataCripto
+
+    private val _dataCriptoDb = MutableLiveData<CriptoResult<List<Cripto>>>()
+    val dataCriptoDb: LiveData<CriptoResult<List<Cripto>>> = _dataCriptoDb
+
 
 /*    private val _dataCripto = MutableStateFlow(emptyList<Payload>())
     val dataCripto: StateFlow<List<Payload>> = _dataCripto*/
@@ -50,17 +59,20 @@ class ViewModelCripto @Inject constructor (private val getCriptoUseCase: useCase
             val result = getCriptoUseCase()
            _dataCripto.value = CriptoResult.Loading(true)
             try {
-                if (result.code() == 200){
-                    result.body()?.let {
-                        _dataCripto.value = CriptoResult.Succes(it)
-                    }
-                }else{
-                    _dataCripto.value = CriptoResult.Loading(false)
+                result?.let {
+                    _dataCripto.value = CriptoResult.Succes(it)
                 }
-
             }catch (e: Exception){
+                _dataCripto.postValue(CriptoResult.Failure(e))
+            }
+        }
+    }
 
-                _dataCripto.value = CriptoResult.Failure(e)
+    fun getCriptosFromDatabase(){
+        viewModelScope.launch {
+            val result = getCriptoFromDatabaseUseCase()
+            if (result != null){
+                _dataCriptoDb.postValue(CriptoResult.Succes(result))
             }
         }
     }
