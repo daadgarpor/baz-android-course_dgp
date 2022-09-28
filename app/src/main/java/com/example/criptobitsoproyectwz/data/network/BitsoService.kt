@@ -2,6 +2,7 @@ package com.example.criptobitsoproyectwz.data.network
 
 import android.database.Observable
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
+import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
 import com.example.criptobitsoproyectwz.data.model.OrderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.Ticket.PayloadCripto
 import com.example.criptobitsoproyectwz.data.model.Ticket.TicketResult
@@ -15,7 +16,8 @@ import retrofit2.http.Url
 interface BitsoService {
 
     @GET("available_books")
-    suspend fun getCriptos(): Response<BaseResult>
+    suspend fun getCriptos(): BaseResult
+   // suspend fun getCriptos(): Response<List<Payload>>
 
 /*    @GET
     suspend fun getTicketInformation(@Url url: String): Response<TicketResult>

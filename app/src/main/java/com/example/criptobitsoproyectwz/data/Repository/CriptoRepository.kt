@@ -2,20 +2,19 @@ package com.example.criptobitsoproyectwz.data.Repository
 
 
 import com.example.criptobitsoproyectwz.data.DataSource.criptoDataSource
+import com.example.criptobitsoproyectwz.data.Room.CriptoEntity
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
+import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.domain.Cripto
 import retrofit2.Response
 import javax.inject.Inject
 
 interface CriptoRepository  {
 
-    /*** Repository
-     * clase se encargaría de ir a base de datos(Room) o a internet.
-     * mandar info al viewmodel
-     */
-
-    suspend fun getAllCriptos(): Response<BaseResult>
+    suspend fun getAllCriptos(): List<Payload>
 
 
+    suspend fun getAllCriptoFromDatabase(): List<Cripto>
 
  /*   suspend fun getAllCriptos(): BaseResult? {
         return withContext(Dispatchers.IO) {

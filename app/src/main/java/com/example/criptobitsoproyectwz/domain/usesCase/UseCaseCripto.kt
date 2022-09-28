@@ -3,6 +3,7 @@ package com.example.criptobitsoproyectwz.data.Repository
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.OrderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.Ticket.TicketResult
+import com.example.criptobitsoproyectwz.domain.Cripto
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,7 +16,15 @@ class useCaseCripto @Inject constructor(private val repository: CriptoRepository
      */
 
     //invoke se llama automaticamente al declarar una instancia, debe retonar lo que dice la clase
-    suspend operator fun invoke(): Response<BaseResult> = repository.getAllCriptos()
+    suspend operator fun invoke(): List<Cripto> {
+        val cripto = repository.getAllCriptos()
+        return if (cripto.isNotEmpty()){
+            //Insert criptos
+                repository.getAllCriptoFromDatabase()
+        }else{
+            repository.getAllCriptoFromDatabase()
+        }
+    }
 
   /*  suspend fun useCaseInfoCripto(crip: String): TicketResult? = CriptoRepository().getInfoTicker(crip)
 
