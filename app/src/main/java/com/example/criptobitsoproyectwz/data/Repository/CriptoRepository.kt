@@ -11,10 +11,14 @@ import javax.inject.Inject
 
 interface CriptoRepository  {
 
-    suspend fun getAllCriptos(): List<Payload>
-
+    suspend fun getAllCriptos(): List<Cripto>
 
     suspend fun getAllCriptoFromDatabase(): List<Cripto>
+
+    suspend fun insertAllCriptos(criptoEntity: List<CriptoEntity>)
+
+    suspend fun deleteCriptos()
+
 
  /*   suspend fun getAllCriptos(): BaseResult? {
         return withContext(Dispatchers.IO) {

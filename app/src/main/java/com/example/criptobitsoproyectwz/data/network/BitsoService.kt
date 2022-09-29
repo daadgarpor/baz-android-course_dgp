@@ -16,7 +16,7 @@ import retrofit2.http.Url
 interface BitsoService {
 
     @GET("available_books")
-    suspend fun getCriptos(): BaseResult
+    suspend fun getCriptos():BaseResult
    // suspend fun getCriptos(): Response<List<Payload>>
 
 /*    @GET

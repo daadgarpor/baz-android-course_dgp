@@ -27,11 +27,11 @@ import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun CriptoScreen(navController: NavHostController, list: List<Payload>?) {
+fun CriptoScreen(navController: NavHostController) {
 
     Text(text = "ghoasdosd")
     val imagelogo = painterResource(R.drawable.bitso)
-    Column {
+   /* Column {
         Card(
             elevation = 4.dp,
             modifier = Modifier
@@ -52,7 +52,7 @@ fun CriptoScreen(navController: NavHostController, list: List<Payload>?) {
                 CriptoCard(cripto, navController)
             }
         }
-    }
+    }*/
 
 }
 

@@ -12,10 +12,10 @@ import com.example.criptobitsoproyectwz.ui.View.DetallesScreen
 
 //@Preview
 @Composable
-fun NavigationGraph(list: List<Payload>?) {
+fun NavigationGraph() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Rutas.Home.ruta ){
-        composable(route = Rutas.Home.ruta){ CriptoScreen(navController, list) }
+        composable(route = Rutas.Home.ruta){ CriptoScreen(navController) }
         composable(
             route = Rutas.Detalle.ruta+"/{cripto}",
             arguments = listOf(navArgument("cripto"){type = NavType.StringType})){ back->

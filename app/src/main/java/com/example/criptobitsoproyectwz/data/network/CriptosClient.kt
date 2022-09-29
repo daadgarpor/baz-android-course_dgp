@@ -3,6 +3,8 @@ package com.example.criptobitsoproyectwz.data.network
 import com.example.criptobitsoproyectwz.data.DataSource.criptoDataSource
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.domain.Cripto
+import com.example.criptobitsoproyectwz.domain.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call

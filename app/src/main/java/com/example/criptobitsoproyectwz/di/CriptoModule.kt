@@ -1,24 +1,28 @@
 package com.example.criptobitsoproyectwz.di
 
+import android.content.Context
 import android.os.Build
+import androidx.room.Room
 import com.example.criptobitsoproyectwz.Util.Constans
 import com.example.criptobitsoproyectwz.data.DataSource.criptoDataSource
 import com.example.criptobitsoproyectwz.data.Repository.CriptoRepository
 import com.example.criptobitsoproyectwz.data.Repository.CriptoRepositoryImpl
+import com.example.criptobitsoproyectwz.data.Room.CriptoDatabase
 import com.example.criptobitsoproyectwz.data.network.BitsoService
 import com.example.criptobitsoproyectwz.data.network.CriptosClient
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,6 +32,7 @@ abstract class CriptoModule {
 
     @Binds
     abstract fun providesCriptoDataSource(criptoClient:CriptosClient): criptoDataSource
+
     companion object{
 
         @Provides
@@ -36,13 +41,6 @@ abstract class CriptoModule {
                 .addInterceptor(HttpLoggingInterceptor().also {
                     it.level = HttpLoggingInterceptor.Level.BODY
                 })
-                .addInterceptor {
-                    it.proceed(
-                        it.request()
-                            .newBuilder()
-                            .header("User-Agent","Device: ${Build.DEVICE} Daniel GP")
-                            .build())
-                }
                 .build()
 
         @Provides
@@ -56,5 +54,14 @@ abstract class CriptoModule {
 
         @Provides
         fun providesCriptoService(retrofit: Retrofit) = retrofit.create<BitsoService>()
+
+        @Singleton
+        @Provides
+        fun provideRoom(@ApplicationContext context: Context) =
+            Room.databaseBuilder(context, CriptoDatabase::class.java, Constans.QUOTE_DATABASE_NAME).build()
+
+        @Singleton
+        @Provides
+        fun provideCriptoDao(database: CriptoDatabase) = database.criptoDao()
     }
 }

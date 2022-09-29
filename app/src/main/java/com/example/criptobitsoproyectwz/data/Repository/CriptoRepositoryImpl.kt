@@ -15,15 +15,22 @@ class CriptoRepositoryImpl @Inject constructor(
     private val criptoDao: CriptoDao
     ): CriptoRepository {
 
-    override suspend fun getAllCriptos(): List<Cripto>{
+    override suspend fun getAllCriptos(): List<Cripto> {
         val response: BaseResult = remoteDataSource.getAllCriptos()
-        val result = response.payload
-        return result.map{ it.toDomain()}
+        return response.payload.map{ it.toDomain()}
     }
 
     override suspend fun getAllCriptoFromDatabase(): List<Cripto> {
         val response: List<CriptoEntity> = criptoDao.getAllCriptos()
         return response.map { it.toDomain() }
+    }
+
+    override suspend fun insertAllCriptos(criptoEntity: List<CriptoEntity>) {
+       criptoDao.insertCripto(criptoEntity)
+    }
+
+    override suspend fun deleteCriptos() {
+        criptoDao.deleteCripto()
     }
 
 }

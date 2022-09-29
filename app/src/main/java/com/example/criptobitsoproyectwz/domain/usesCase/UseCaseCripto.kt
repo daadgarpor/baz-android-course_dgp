@@ -1,26 +1,18 @@
 package com.example.criptobitsoproyectwz.data.Repository
 
-import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
-import com.example.criptobitsoproyectwz.data.model.OrderBook.BaseBookOrder
-import com.example.criptobitsoproyectwz.data.model.Ticket.TicketResult
+import com.example.criptobitsoproyectwz.data.Room.toDatabase
 import com.example.criptobitsoproyectwz.domain.Cripto
-import retrofit2.Response
+import com.example.criptobitsoproyectwz.domain.toDomain
 import javax.inject.Inject
 
 class useCaseCripto @Inject constructor(private val repository: CriptoRepository) {
 
-    /***
-     * Dominio o interactors es la lógica de la negocio. Una única acción
-     * Casos de uso, interactors
-     * Si quieres pasar a la ui datos tendremos un caso de uso para cada uno y este llama al repositorio
-     */
-
-    //invoke se llama automaticamente al declarar una instancia, debe retonar lo que dice la clase
     suspend operator fun invoke(): List<Cripto> {
         val cripto = repository.getAllCriptos()
         return if (cripto.isNotEmpty()){
-            //Insert criptos
-                repository.getAllCriptoFromDatabase()
+            repository.deleteCriptos()
+            repository.insertAllCriptos(cripto.map { it.toDatabase() } )
+            cripto
         }else{
             repository.getAllCriptoFromDatabase()
         }

@@ -9,9 +9,13 @@ import androidx.room.Query
 interface CriptoDao {
 
     @Query("SELECT * FROM cripto_entity")
-    fun getAllCriptos(): List<CriptoEntity>
+    suspend fun getAllCriptos(): List<CriptoEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCripto(entity: List<CriptoEntity>)
+    suspend fun insertCripto(criptoEntity: List<CriptoEntity>)
+
+    @Query("DELETE FROM cripto_entity")
+    suspend fun deleteCripto()
+
 
 }

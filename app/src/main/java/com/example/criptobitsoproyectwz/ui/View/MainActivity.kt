@@ -8,6 +8,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.criptobitsoproyectwz.NavigationCompose.NavigationGraph
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val criptos by viewModelCripto.criptos.collectAsState()
             CriptoBitsoProyectWzTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -38,8 +41,9 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     ){
-                        var list: List<Payload>? = getlistCripto()
-                       NavigationGraph(list)
+
+                        Log.d("Prueba", "onCreate: $criptos")
+                      // NavigationGraph()
                     }
 
                 }
@@ -47,7 +51,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Composable
+/*    @Composable
     private fun getlistCripto(): List<Payload>? {
         var list: List<Payload>? = null
         viewModelCripto.getCriptos()
@@ -68,7 +72,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         return list
-    }
+    }*/
 
 
 }
