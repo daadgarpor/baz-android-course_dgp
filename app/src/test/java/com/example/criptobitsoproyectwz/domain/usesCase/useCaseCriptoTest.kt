@@ -2,13 +2,13 @@ package com.example.criptobitsoproyectwz.domain.usesCase
 
 import com.example.criptobitsoproyectwz.data.Repository.CriptoRepository
 import com.example.criptobitsoproyectwz.data.Repository.UseCaseCripto
-import com.example.criptobitsoproyectwz.domain.Cripto
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
+import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 
 import org.junit.Before
 import org.junit.Test

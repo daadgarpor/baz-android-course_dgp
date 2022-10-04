@@ -10,10 +10,15 @@ import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import com.example.criptobitsoproyectwz.ui.View.CriptoScreen
 import com.example.criptobitsoproyectwz.ui.View.DetallesScreen
 import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelGetCripto
+import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelInfoCripto
 
 //@Preview
 @Composable
-fun NavigationGraph(criptos: List<Cripto>, viewModel: ViewModelGetCripto) {
+fun NavigationGraph(
+    criptos: List<Cripto>,
+    viewModel: ViewModelGetCripto,
+    viewModel3: ViewModelInfoCripto
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Rutas.Home.ruta ){
         composable(route = Rutas.Home.ruta){ CriptoScreen(navController, criptos) }
@@ -21,7 +26,7 @@ fun NavigationGraph(criptos: List<Cripto>, viewModel: ViewModelGetCripto) {
             route = Rutas.Detalle.ruta+"/{cripto}",
             arguments = listOf(navArgument("cripto"){type = NavType.StringType})){ back->
             back.arguments?.getString("cripto")?.let {
-                DetallesScreen(navController, it, viewModel)
+                DetallesScreen(navController, it, viewModel, viewModel3)
             }
         }
     }

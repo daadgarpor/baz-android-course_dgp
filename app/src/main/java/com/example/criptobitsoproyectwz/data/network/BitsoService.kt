@@ -15,8 +15,8 @@ interface BitsoService {
     @GET("ticker/?")
     suspend fun getTicketInformation(@Query(value = "book") cripto: String): TicketResult
 
-    @GET("order_book/?book={cripto}")
-    suspend fun getBookOrder(@Query("cripto") cripto: String): BaseBookOrder
+    @GET("order_book/?")
+    suspend fun getBookOrder(@Query("book") cripto: String): BaseBookOrder
 
 
 

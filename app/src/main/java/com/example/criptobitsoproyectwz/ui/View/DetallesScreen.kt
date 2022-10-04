@@ -1,7 +1,11 @@
 package com.example.criptobitsoproyectwz.ui.View
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -10,20 +14,30 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.criptobitsoproyectwz.data.model.CriptoImage
+import com.example.criptobitsoproyectwz.data.model.OrderBook.Asks
+import com.example.criptobitsoproyectwz.data.model.OrderBook.Bids
 import com.example.criptobitsoproyectwz.domain.wrapper.CriptoCoin
 import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelGetCripto
+import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelInfoCripto
 import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun DetallesScreen(navController: NavHostController, cripto: String, viewModel: ViewModelGetCripto) {
+fun DetallesScreen(
+    navController: NavHostController,
+    cripto: String,
+    viewModel: ViewModelGetCripto,
+    viewModel3: ViewModelInfoCripto
+) {
     viewModel.getDataCripto(cripto)
     val info by viewModel.dataCripto.collectAsState()
 
@@ -37,31 +51,30 @@ fun DetallesScreen(navController: NavHostController, cripto: String, viewModel: 
             )
         } else {
             CardDetalle(cripto, info)
-           // OtraFORMA(cripto = cripto)
+            OtraFORMA(cripto = cripto, viewModel3)
         }
     }
 }
-
-/*@Composable
-fun OtraFORMA(cripto: String) {
+@Composable
+fun OtraFORMA(cripto: String, viewModel3: ViewModelInfoCripto) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxSize()
     ) {
-        Ask(modifier = Modifier.weight(1f))
+        Ask(modifier = Modifier.weight(1f), viewModel3, cripto)
         Spacer(modifier = Modifier.width(5.dp))
-        Bids(cripto = cripto, modifier = Modifier.weight(1f))
+        Bids(cripto = cripto, modifier = Modifier.weight(1f), viewModel3)
     }
 }
 
 @Composable
-fun Ask(modifier: Modifier = Modifier) {
-    val infoAskBids = viewModel(modelClass = ViewModelCripto::class.java)
-    val asks by infoAskBids.dataAsks.collectAsState()
+fun Ask(modifier: Modifier = Modifier, viewModel3: ViewModelInfoCripto, cripto: String) {
+    viewModel3.getDataCripto(cripto = cripto)
+    val asks by viewModel3.infoCripto.collectAsState()
 
     LazyColumn(modifier = modifier) {
-        if (asks.isNullOrEmpty()) {
+        if (asks.asks.isNullOrEmpty()) {
             item {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -69,7 +82,7 @@ fun Ask(modifier: Modifier = Modifier) {
                 )
             }
         }
-        items(asks) { list ->
+        items(asks.asks) { list ->
             cardAsks(list)
         }
     }
@@ -77,14 +90,13 @@ fun Ask(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Bids(cripto: String, modifier: Modifier = Modifier) {
-    val infoAskBids = viewModel(modelClass = ViewModelCripto::class.java)
-    infoAskBids.getAskBids(cripto)
-    infoAskBids.getAllAskBids(cripto = cripto)
-    val bids by infoAskBids.dataBids.collectAsState()
+fun Bids(cripto: String, modifier: Modifier = Modifier, viewModel3: ViewModelInfoCripto) {
+
+    viewModel3.getDataCripto(cripto)
+    val bids by viewModel3.infoCripto.collectAsState()
 
     LazyColumn(modifier = modifier) {
-        if (bids.isNullOrEmpty()) {
+        if (bids.bids.isNullOrEmpty()) {
             item {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -93,7 +105,7 @@ fun Bids(cripto: String, modifier: Modifier = Modifier) {
             }
         }
 
-        items(bids) { list ->
+        items(bids.bids) { list ->
             cardBids(list)
         }
     }
@@ -163,7 +175,7 @@ private fun cardAsks(list: Asks) {
             }
         }
     }
-}*/
+}
 
 @Composable
 fun CardDetalle(cripto: String, info: CriptoCoin) {
