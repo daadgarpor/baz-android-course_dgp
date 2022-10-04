@@ -1,7 +1,5 @@
 package com.example.criptobitsoproyectwz.ui.View
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,19 +18,16 @@ import androidx.navigation.NavHostController
 import com.example.criptobitsoproyectwz.NavigationCompose.Rutas
 import com.example.criptobitsoproyectwz.R
 import com.example.criptobitsoproyectwz.Util.convertir
-import com.example.criptobitsoproyectwz.core.CriptoResult
 import com.example.criptobitsoproyectwz.data.model.CriptoImage
-import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
-import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun CriptoScreen(navController: NavHostController) {
+fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
 
-    Text(text = "ghoasdosd")
     val imagelogo = painterResource(R.drawable.bitso)
-   /* Column {
+    Column {
         Card(
             elevation = 4.dp,
             modifier = Modifier
@@ -48,23 +44,37 @@ fun CriptoScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .align(Alignment.CenterHorizontally),
         ) {
-            items(list!!) { cripto ->
+            if (criptos.isEmpty()) {
+                item() {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(50.dp, 50.dp)
+                    )
+                }
+            }
+            items(criptos) { cripto ->
                 CriptoCard(cripto, navController)
             }
         }
-    }*/
+    }
 
 }
 
-
-
-
-
+@Composable
+private fun progress() {
+    LinearProgressIndicator(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(15.dp),
+        backgroundColor = Color.LightGray,
+        color = Color.Red //progress color
+    )
+}
 
 @Composable
-fun CriptoCard(cripto: Payload, navController: NavHostController) {
+fun CriptoCard(cripto: Cripto, navController: NavHostController) {
     val imageCrip = CriptoImage()
-    val imagePainter = imageCrip.match(cripto = cripto.book)
+    val imagePainter = imageCrip.match(cripto = cripto.name)
     val image = painterResource(id = imagePainter)
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US)
 
@@ -74,7 +84,7 @@ fun CriptoCard(cripto: Payload, navController: NavHostController) {
             .fillMaxWidth()
             .wrapContentHeight()
             .clickable {
-                navController.navigate(route = "${Rutas.Detalle.ruta}/${cripto.book}")
+                navController.navigate(route = "${Rutas.Detalle.ruta}/${cripto.name}")
             },
         shape = MaterialTheme.shapes.medium,
         elevation = 5.dp,
@@ -93,7 +103,7 @@ fun CriptoCard(cripto: Payload, navController: NavHostController) {
             )
             Column(Modifier.padding(8.dp)) {
                 Text(
-                    text = cripto.book.convertir(),
+                    text = cripto.name.convertir(),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier
                         .padding(bottom = 8.dp)
@@ -101,7 +111,7 @@ fun CriptoCard(cripto: Payload, navController: NavHostController) {
                     color = MaterialTheme.colors.onSurface,
                 )
                 Text(
-                    text = currencyFormatter.format(cripto.maximo),
+                    text = cripto.maximum_price.toString(),
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )

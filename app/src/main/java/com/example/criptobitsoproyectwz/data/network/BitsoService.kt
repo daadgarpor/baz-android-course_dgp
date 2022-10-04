@@ -1,34 +1,23 @@
 package com.example.criptobitsoproyectwz.data.network
 
-import android.database.Observable
 import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
-import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
 import com.example.criptobitsoproyectwz.data.model.OrderBook.BaseBookOrder
-import com.example.criptobitsoproyectwz.data.model.Ticket.PayloadCripto
 import com.example.criptobitsoproyectwz.data.model.Ticket.TicketResult
-import io.reactivex.rxjava3.core.Single
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Url
+import retrofit2.http.Query
 
 interface BitsoService {
 
     @GET("available_books")
     suspend fun getCriptos():BaseResult
-   // suspend fun getCriptos(): Response<List<Payload>>
 
-/*    @GET
-    suspend fun getTicketInformation(@Url url: String): Response<TicketResult>
+    @GET("ticker/?")
+    suspend fun getTicketInformation(@Query(value = "book") cripto: String): TicketResult
 
-    @GET
-    suspend fun getBookOrder(@Url url: String): Response<BaseBookOrder>
+    @GET("order_book/?book={cripto}")
+    suspend fun getBookOrder(@Query("cripto") cripto: String): BaseBookOrder
 
-    @GET("/available_books")
-    fun getCriptosService(): Call<BaseResult>
 
-    @GET("/available_books")
-    fun getCriptosServiceRX(): Single<BaseResult>*/
 
 }

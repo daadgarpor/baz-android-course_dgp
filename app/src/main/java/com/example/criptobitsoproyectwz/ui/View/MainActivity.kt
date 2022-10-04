@@ -14,20 +14,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.criptobitsoproyectwz.NavigationCompose.NavigationGraph
 import com.example.criptobitsoproyectwz.R
-import com.example.criptobitsoproyectwz.core.CriptoResult
-import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.Util.CoreUtil
 import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelCripto
+import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelGetCripto
 import com.example.criptobitsoproyectwz.ui.theme.CriptoBitsoProyectWzTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-      val viewModelCripto : ViewModelCripto by viewModels()
+    val viewModelCripto: ViewModelCripto by viewModels()
+    val viewModelCripto2: ViewModelGetCripto by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        CoreUtil.context = applicationContext
         setContent {
+            viewModelCripto.getCriptos()
             val criptos by viewModelCripto.criptos.collectAsState()
+
+            viewModelCripto2.getDataCripto("xrp_mxn")
+            val cr by viewModelCripto2.dataCripto.collectAsState()
             CriptoBitsoProyectWzTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -40,40 +46,15 @@ class MainActivity : ComponentActivity() {
                                 title = { Text(stringResource(R.string.title)) }
                             )
                         }
-                    ){
-
-                        Log.d("Prueba", "onCreate: $criptos")
-                      // NavigationGraph()
+                    ) {
+                        Log.d("INFO", "onCreate: $cr")
+                        NavigationGraph(criptos = criptos)
                     }
 
                 }
             }
         }
     }
-
-/*    @Composable
-    private fun getlistCripto(): List<Payload>? {
-        var list: List<Payload>? = null
-        viewModelCripto.getCriptos()
-
-        viewModelCripto.dataCripto.observe(this) { crip ->
-            when (crip) {
-                is CriptoResult.Loading -> {
-                    Log.d("Prueba", "onCreate: ${crip.state}")
-
-                }
-                is CriptoResult.Succes -> {
-                    Log.d("Prueba", "onCreate: ${crip.data}")
-                    list = crip.data.payload.filter { it.book.contains("mxn") }
-                }
-                is CriptoResult.Failure -> {
-                    Log.d("Prueba", "onCreate: ${crip.exception}")
-                }
-            }
-        }
-        return list
-    }*/
-
 
 }
 

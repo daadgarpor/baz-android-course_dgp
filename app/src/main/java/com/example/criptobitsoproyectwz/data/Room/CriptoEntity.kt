@@ -3,7 +3,7 @@ package com.example.criptobitsoproyectwz.data.Room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.criptobitsoproyectwz.domain.Cripto
+import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 
 @Entity(tableName = "cripto_entity")
 data class CriptoEntity(
