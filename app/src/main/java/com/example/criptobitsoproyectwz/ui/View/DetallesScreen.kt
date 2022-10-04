@@ -1,52 +1,48 @@
 package com.example.criptobitsoproyectwz.ui.View
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.criptobitsoproyectwz.data.model.CriptoImage
-import com.example.criptobitsoproyectwz.data.model.OrderBook.Asks
-import com.example.criptobitsoproyectwz.data.model.OrderBook.Bids
-import com.example.criptobitsoproyectwz.data.model.Ticket.PayloadCripto
-import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelCripto
+import com.example.criptobitsoproyectwz.domain.wrapper.CriptoCoin
+import com.example.criptobitsoproyectwz.ui.ViewModel.ViewModelGetCripto
 import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun DetallesScreen(navController: NavHostController, cripto: String) {
-   /* val infoCriptoVM = viewModel(modelClass = ViewModelCripto::class.java)
-    infoCriptoVM.getCriptosInfo(cripto)
-    val info by infoCriptoVM.dataCriptoInfo.collectAsState()
+fun DetallesScreen(navController: NavHostController, cripto: String, viewModel: ViewModelGetCripto) {
+    viewModel.getDataCripto(cripto)
+    val info by viewModel.dataCripto.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (info.isNullOrEmpty()) {
+        if (info.book.isNullOrBlank()) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(50.dp, 50.dp)
             )
         } else {
             CardDetalle(cripto, info)
-            OtraFORMA(cripto = cripto)
+           // OtraFORMA(cripto = cripto)
         }
     }
 }
 
-@Composable
+/*@Composable
 fun OtraFORMA(cripto: String) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -167,10 +163,10 @@ private fun cardAsks(list: Asks) {
             }
         }
     }
-}
+}*/
 
 @Composable
-fun CardDetalle(cripto: String, info: List<PayloadCripto>) {
+fun CardDetalle(cripto: String, info: CriptoCoin) {
     val imageCrip = CriptoImage()
     val imagePainter = imageCrip.match(cripto = cripto)
     val image = painterResource(id = imagePainter)
@@ -197,17 +193,17 @@ fun CardDetalle(cripto: String, info: List<PayloadCripto>) {
                 color = MaterialTheme.colors.onSurface,
             )
             Text(
-                text = "High: ${currencyFormatter.format(info[0].high)}",
+                text = "High: ${currencyFormatter.format(info.high)}",
                 style = MaterialTheme.typography.overline,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Low: ${currencyFormatter.format(info[0].low)}",
+                text = "Low: ${currencyFormatter.format(info.low)}",
                 style = MaterialTheme.typography.overline,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = "Last: ${currencyFormatter.format(info[0].last)}",
+                text = "Last: ${currencyFormatter.format(info.last)}",
                 style = MaterialTheme.typography.overline,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
@@ -230,6 +226,6 @@ fun CardDetalle(cripto: String, info: List<PayloadCripto>) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
-    }*/
+    }
 
 }

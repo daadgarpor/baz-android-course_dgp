@@ -61,17 +61,6 @@ fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
 }
 
 @Composable
-private fun progress() {
-    LinearProgressIndicator(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(15.dp),
-        backgroundColor = Color.LightGray,
-        color = Color.Red //progress color
-    )
-}
-
-@Composable
 fun CriptoCard(cripto: Cripto, navController: NavHostController) {
     val imageCrip = CriptoImage()
     val imagePainter = imageCrip.match(cripto = cripto.name)
