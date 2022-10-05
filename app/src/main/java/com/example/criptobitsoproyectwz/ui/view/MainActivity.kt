@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         CoreUtil.context = applicationContext
         setContent {
-
             viewModelCripto.getCriptos()
             val criptos by viewModelCripto.criptos.collectAsState()
 
@@ -51,7 +50,6 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavigationGraph(criptos = criptos, viewModel, viewModel3)
                     }
-
                 }
             }
         }

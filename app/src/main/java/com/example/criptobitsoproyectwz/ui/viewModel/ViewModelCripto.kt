@@ -1,9 +1,11 @@
 package com.example.criptobitsoproyectwz.ui.viewModel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseCripto
 import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseCriptoDatabase
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
+import com.example.criptobitsoproyectwz.util.CoreUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,16 +27,14 @@ class ViewModelCripto @Inject constructor(
 
     fun getCriptos() {
         viewModelScope.launch {
-            val result = getCriptoUseCase()
-            _criptos.value = result.filter { it.name.contains("mxn") }
-        }
-    }
-
-    fun getCriptosFromDatabase() {
-        viewModelScope.launch {
-            val result = getCriptoFromDatabaseUseCase()
-            if (!result.isNullOrEmpty()) {
+            if (CoreUtil.checkNetworkStatus()) {
+                val result = getCriptoUseCase()
                 _criptos.value = result.filter { it.name.contains("mxn") }
+            } else {
+                val result = getCriptoFromDatabaseUseCase()
+                if (!result.isNullOrEmpty()) {
+                    _criptos.value = result.filter { it.name.contains("mxn") }
+                }
             }
         }
     }

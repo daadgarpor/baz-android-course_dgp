@@ -10,8 +10,6 @@ class UseCaseCripto @Inject constructor(private val repository: CriptoRepository
 
     suspend operator fun invoke(): List<Cripto> {
         val cripto = repository.getAllCriptos()
-
-        // return if (CoreUtil.checkNetworkStatus()){
         return if (!cripto.isNullOrEmpty()) {
             repository.deleteCriptos()
             repository.insertAllCriptos(cripto.map { it.toDatabase() })
