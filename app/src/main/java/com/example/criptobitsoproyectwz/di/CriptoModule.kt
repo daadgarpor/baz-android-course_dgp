@@ -1,15 +1,14 @@
 package com.example.criptobitsoproyectwz.di
 
 import android.content.Context
-import android.os.Build
 import androidx.room.Room
-import com.example.criptobitsoproyectwz.Util.Constans
-import com.example.criptobitsoproyectwz.data.DataSource.criptoDataSource
-import com.example.criptobitsoproyectwz.data.Repository.CriptoRepository
-import com.example.criptobitsoproyectwz.data.Repository.CriptoRepositoryImpl
-import com.example.criptobitsoproyectwz.data.Room.CriptoDatabase
+import com.example.criptobitsoproyectwz.data.dataSource.criptoDataSource
 import com.example.criptobitsoproyectwz.data.network.BitsoService
 import com.example.criptobitsoproyectwz.data.network.CriptosClient
+import com.example.criptobitsoproyectwz.data.repository.CriptoRepository
+import com.example.criptobitsoproyectwz.data.repository.CriptoRepositoryImpl
+import com.example.criptobitsoproyectwz.data.room.CriptoDatabase
+import com.example.criptobitsoproyectwz.util.Constants
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class CriptoModule {
@@ -31,23 +29,25 @@ abstract class CriptoModule {
     abstract fun providesCriptoRepository(criptoRepositoryImpl: CriptoRepositoryImpl): CriptoRepository
 
     @Binds
-    abstract fun providesCriptoDataSource(criptoClient:CriptosClient): criptoDataSource
+    abstract fun providesCriptoDataSource(criptoClient: CriptosClient): criptoDataSource
 
-    companion object{
+    companion object {
 
         @Provides
         fun provideBaseUrl(): OkHttpClient =
             OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().also {
-                    it.level = HttpLoggingInterceptor.Level.BODY
-                })
+                .addInterceptor(
+                    HttpLoggingInterceptor().also {
+                        it.level = HttpLoggingInterceptor.Level.BODY
+                    }
+                )
                 .build()
 
         @Provides
-        fun provideRetrofitInstance(client: OkHttpClient): Retrofit{
+        fun provideRetrofitInstance(client: OkHttpClient): Retrofit {
             return Retrofit.Builder()
                 .client(client)
-                .baseUrl(Constans.BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
@@ -58,7 +58,7 @@ abstract class CriptoModule {
         @Singleton
         @Provides
         fun provideRoom(@ApplicationContext context: Context) =
-            Room.databaseBuilder(context, CriptoDatabase::class.java, Constans.QUOTE_DATABASE_NAME).build()
+            Room.databaseBuilder(context, CriptoDatabase::class.java, Constants.QUOTE_DATABASE_NAME).build()
 
         @Singleton
         @Provides

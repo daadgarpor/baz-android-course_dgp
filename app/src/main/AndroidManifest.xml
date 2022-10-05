@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CriptoBitsoProyectWz"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.example.criptobitsoproyectwz.ui.View.MainActivity"
+            android:name="com.example.criptobitsoproyectwz.ui.view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CriptoBitsoProyectWz">

@@ -1,6 +1,6 @@
 package com.example.criptobitsoproyectwz.domain.wrapper
 
-import com.example.criptobitsoproyectwz.data.model.Ticket.PayloadCripto
+import com.example.criptobitsoproyectwz.data.model.ticket.PayloadCripto
 
 data class CriptoCoin(
     val book: String,

@@ -1,8 +1,7 @@
 package com.example.criptobitsoproyectwz.domain.wrapper
 
-import com.example.criptobitsoproyectwz.data.Room.CriptoEntity
-import com.example.criptobitsoproyectwz.data.model.Criptos.BaseResult
-import com.example.criptobitsoproyectwz.data.model.Criptos.Payload
+import com.example.criptobitsoproyectwz.data.model.criptos.Payload
+import com.example.criptobitsoproyectwz.data.room.CriptoEntity
 
 data class Cripto(val name: String, val maximum_price: Double)
 
