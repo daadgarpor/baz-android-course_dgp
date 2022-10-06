@@ -19,9 +19,6 @@ class ViewModelCripto @Inject constructor(
     private val getCriptoFromDatabaseUseCase: UseCaseCriptoDatabase
 ) : ViewModel() {
 
-    private val _dataCripto: MutableStateFlow<List<Cripto>> = MutableStateFlow(emptyList())
-    val dataCripto: StateFlow<List<Cripto>> = _dataCripto.asStateFlow()
-
     private val _criptos: MutableStateFlow<List<Cripto>> = MutableStateFlow(emptyList())
     val criptos: StateFlow<List<Cripto>> = _criptos.asStateFlow()
 

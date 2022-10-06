@@ -6,6 +6,7 @@ import com.example.criptobitsoproyectwz.data.dataSource.criptoDataSource
 import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
+import com.example.criptobitsoproyectwz.data.room.CriptoCoinEntity
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import com.example.criptobitsoproyectwz.domain.wrapper.CriptoCoin
 import com.example.criptobitsoproyectwz.domain.wrapper.InfoCriptoCoin
@@ -44,4 +45,29 @@ class CriptoRepositoryImpl @Inject constructor(
     override suspend fun deleteCriptos() {
         criptoDao.deleteCripto()
     }
+
+    override suspend fun getCriptoCoinFromDatabase(): CriptoCoin {
+        val response : CriptoCoinEntity = criptoDao.getCoinCriptos()
+        return response.toDomain()
+    }
+
+    override suspend fun insertCriptoCoin(critoEntity: CriptoCoinEntity) {
+        criptoDao.insertCoinCripto(critoEntity)
+    }
+
+    override suspend fun deleteCriptoCoin() = criptoDao.deleteCoinCripto()
+
+
+ /*   override suspend fun getInfoCriptoCoin(): List<InfoCriptoCoin> {
+        val response : List<InCriptoCoinEntity> = criptoDao.getInfoCriptos()
+        return response.map { it.toDomain() }
+    }
+
+    override suspend fun insertInfoCriptoCoin(criptoEntity: List<InCriptoCoinEntity>) {
+        criptoDao.insertInfoCripto(criptoEntity)
+    }
+
+    override suspend fun deleteInfoCriptoCoin() = criptoDao.deleteInfoCripto()
+*/
+
 }

@@ -50,7 +50,7 @@ fun DetallesScreen(
             )
         } else {
             CardDetalle(cripto, info)
-            OtraFORMA(cripto = cripto, viewModel3)
+           // OtraFORMA(cripto = cripto, viewModel3)
         }
     }
 }

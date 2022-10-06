@@ -15,7 +15,6 @@ class UseCaseCripto @Inject constructor(private val repository: CriptoRepository
             repository.insertAllCriptos(cripto.map { it.toDatabase() })
             cripto
         } else {
-            Log.d("INFO", "invoke: ENTRO ALA BD")
             repository.getAllCriptoFromDatabase()
         }
     }

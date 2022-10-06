@@ -97,7 +97,7 @@ fun CriptoCard(cripto: Cripto, navController: NavHostController) {
                     color = MaterialTheme.colors.onSurface
                 )
                 Text(
-                    text = cripto.maximum_price.toString(),
+                    text = currencyFormatter.format(cripto.maximum_price),
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
