@@ -2,7 +2,7 @@ package com.example.criptobitsoproyectwz.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseInfoCripto
+import com.example.criptobitsoproyectwz.domain.usesCase.GetInfoCriptoUseCase
 import com.example.criptobitsoproyectwz.domain.wrapper.InfoCriptoCoin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelInfoCripto  @Inject constructor(
-    private val getCriptoDataUseCase: UseCaseInfoCripto
+    private val getCriptoDataGetUseCase: GetInfoCriptoUseCase
 ) : ViewModel() {
 
     private val _infoCripto : MutableStateFlow<InfoCriptoCoin> = MutableStateFlow(
@@ -23,7 +23,7 @@ class ViewModelInfoCripto  @Inject constructor(
 
     fun getDataCripto(cripto: String) {
         viewModelScope.launch {
-            val result = getCriptoDataUseCase.getDataCripto(cripto)
+            val result = getCriptoDataGetUseCase.getDataCripto(cripto)
             _infoCripto.value = result
         }
     }

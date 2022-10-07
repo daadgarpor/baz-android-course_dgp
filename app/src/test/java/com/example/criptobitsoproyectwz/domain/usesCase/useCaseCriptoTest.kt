@@ -17,12 +17,12 @@ class useCaseCriptoTest {
     private lateinit var criptosRepositorys: CriptoRepository
 
 
-    lateinit var usecaseCripto: UseCaseCripto
+    lateinit var usecaseCriptoUseCase: CriptoUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        usecaseCripto = UseCaseCripto(criptosRepositorys)
+        usecaseCriptoUseCase = CriptoUseCase(criptosRepositorys)
     }
 
 
@@ -32,7 +32,7 @@ class useCaseCriptoTest {
         coEvery { criptosRepositorys.getAllCriptos() } returns emptyList()
 
         //When
-        usecaseCripto()
+        usecaseCriptoUseCase()
 
         //Then
         coVerify(exactly = 1) { criptosRepositorys.getAllCriptoFromDatabase() }
@@ -45,7 +45,7 @@ class useCaseCriptoTest {
         coEvery { criptosRepositorys.getAllCriptos() } returns mylist
 
         //When
-        val response = usecaseCripto()
+        val response = usecaseCriptoUseCase()
 
         //Then
         coVerify(exactly = 1) { criptosRepositorys.deleteCriptos() }

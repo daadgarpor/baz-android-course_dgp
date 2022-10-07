@@ -37,13 +37,15 @@ fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
         ) {
             Image(painter = imagelogo, contentDescription = null)
         }
+
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.CenterHorizontally)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             if (criptos.isEmpty()) {
-                item() {
+                item {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .size(50.dp, 50.dp)
@@ -55,6 +57,7 @@ fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
             }
         }
     }
+
 }
 
 @Composable

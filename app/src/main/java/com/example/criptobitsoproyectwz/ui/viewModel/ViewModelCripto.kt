@@ -2,8 +2,8 @@ package com.example.criptobitsoproyectwz.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseCripto
-import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseCriptoDatabase
+import com.example.criptobitsoproyectwz.domain.usesCase.CriptoUseCase
+import com.example.criptobitsoproyectwz.domain.usesCase.CriptoDatabaseUseCase
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import com.example.criptobitsoproyectwz.util.CoreUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelCripto @Inject constructor(
-    private val getCriptoUseCase: UseCaseCripto,
-    private val getCriptoFromDatabaseUseCase: UseCaseCriptoDatabase
+    private val getCriptoUseCase: CriptoUseCase,
+    private val getCriptoFromDatabaseUseCase: CriptoDatabaseUseCase,
+    private val checkNet: CoreUtil
 ) : ViewModel() {
 
     private val _criptos: MutableStateFlow<List<Cripto>> = MutableStateFlow(emptyList())
@@ -24,7 +25,7 @@ class ViewModelCripto @Inject constructor(
 
     fun getCriptos() {
         viewModelScope.launch {
-            if (CoreUtil.checkNetworkStatus()) {
+            if (checkNet.checkNetworkStatus()) {
                 val result = getCriptoUseCase()
                 _criptos.value = result.filter { it.name.contains("mxn") }
             } else {

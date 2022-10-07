@@ -2,7 +2,7 @@ package com.example.criptobitsoproyectwz.data.repository
 
 import com.example.criptobitsoproyectwz.data.room.CriptoDao
 import com.example.criptobitsoproyectwz.data.room.CriptoEntity
-import com.example.criptobitsoproyectwz.data.dataSource.criptoDataSource
+import com.example.criptobitsoproyectwz.data.dataSource.CriptoDataSource
 import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
@@ -14,7 +14,7 @@ import com.example.criptobitsoproyectwz.domain.wrapper.toDomain
 import javax.inject.Inject
 
 class CriptoRepositoryImpl @Inject constructor(
-    private val remoteDataSource: criptoDataSource,
+    private val remoteDataSource: CriptoDataSource,
     private val criptoDao: CriptoDao
 ) : CriptoRepository {
 

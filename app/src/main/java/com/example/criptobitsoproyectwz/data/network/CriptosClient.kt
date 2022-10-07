@@ -1,12 +1,12 @@
 package com.example.criptobitsoproyectwz.data.network
 
-import com.example.criptobitsoproyectwz.data.dataSource.criptoDataSource
+import com.example.criptobitsoproyectwz.data.dataSource.CriptoDataSource
 import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
 import javax.inject.Inject
 
-class CriptosClient @Inject constructor(private val criptoService: BitsoService) : criptoDataSource {
+class CriptosClient @Inject constructor(private val criptoService: BitsoService) : CriptoDataSource {
 
     override suspend fun getAllCriptos(): BaseResult = criptoService.getCriptos()
 

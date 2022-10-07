@@ -2,13 +2,14 @@ package com.example.criptobitsoproyectwz.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.criptobitsoproyectwz.data.dataSource.criptoDataSource
+import com.example.criptobitsoproyectwz.data.dataSource.CriptoDataSource
 import com.example.criptobitsoproyectwz.data.network.BitsoService
 import com.example.criptobitsoproyectwz.data.network.CriptosClient
 import com.example.criptobitsoproyectwz.data.repository.CriptoRepository
 import com.example.criptobitsoproyectwz.data.repository.CriptoRepositoryImpl
 import com.example.criptobitsoproyectwz.data.room.CriptoDatabase
 import com.example.criptobitsoproyectwz.util.Constants
+import com.example.criptobitsoproyectwz.util.CoreUtil
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -29,9 +30,13 @@ abstract class CriptoModule {
     abstract fun providesCriptoRepository(criptoRepositoryImpl: CriptoRepositoryImpl): CriptoRepository
 
     @Binds
-    abstract fun providesCriptoDataSource(criptoClient: CriptosClient): criptoDataSource
+    abstract fun providesCriptoDataSource(criptoClient: CriptosClient): CriptoDataSource
 
     companion object {
+
+        @Singleton
+        @Provides
+        fun provideContext(@ApplicationContext context: Context): Context = context.applicationContext
 
         @Provides
         fun provideBaseUrl(): OkHttpClient =

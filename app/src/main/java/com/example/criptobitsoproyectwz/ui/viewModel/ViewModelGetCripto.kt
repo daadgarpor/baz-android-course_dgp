@@ -1,9 +1,8 @@
 package com.example.criptobitsoproyectwz.ui.viewModel
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseDataCripto
-import com.example.criptobitsoproyectwz.domain.usesCase.UseCaseGetDataCoin
+import com.example.criptobitsoproyectwz.domain.usesCase.GetDataCriptoUseCase
+import com.example.criptobitsoproyectwz.domain.usesCase.GetDataCoinUseCase
 import com.example.criptobitsoproyectwz.domain.wrapper.CriptoCoin
 import com.example.criptobitsoproyectwz.util.CoreUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelGetCripto @Inject constructor(
-    private val getCriptoDataUseCase: UseCaseDataCripto,
-    private val getCriptoDataCoinUseCase: UseCaseGetDataCoin,
+    private val getCriptoDataGetUseCase: GetDataCriptoUseCase,
+    private val getCriptoDataCoinUseCase: GetDataCoinUseCase,
+    private val checkNet: CoreUtil
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     private val _dataCripto: MutableStateFlow<CriptoCoin> =
         MutableStateFlow(CriptoCoin("", 0.0, 0.0, 0.0))
@@ -26,8 +26,8 @@ class ViewModelGetCripto @Inject constructor(
 
     fun getDataCripto(cripto: String) {
         viewModelScope.launch {
-            if (CoreUtil.checkNetworkStatus()) {
-                val result = getCriptoDataUseCase(cripto)
+            if (checkNet.checkNetworkStatus()) {
+                val result = getCriptoDataGetUseCase(cripto)
                 _dataCripto.value = result
             }else{
                 val result = getCriptoDataCoinUseCase()

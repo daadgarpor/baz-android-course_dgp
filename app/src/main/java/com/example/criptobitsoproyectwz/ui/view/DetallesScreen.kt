@@ -41,7 +41,10 @@ fun DetallesScreen(
     val info by viewModel.dataCripto.collectAsState()
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
         if (info.book.isNullOrBlank()) {
             CircularProgressIndicator(
@@ -73,7 +76,8 @@ fun Ask(modifier: Modifier = Modifier, viewModel3: ViewModelInfoCripto, cripto: 
     viewModel3.getDataCripto(cripto = cripto)
     val asks by viewModel3.infoCripto.collectAsState()
 
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier,
+    ) {
         if (asks.asks.isNullOrEmpty()) {
             item {
                 CircularProgressIndicator(

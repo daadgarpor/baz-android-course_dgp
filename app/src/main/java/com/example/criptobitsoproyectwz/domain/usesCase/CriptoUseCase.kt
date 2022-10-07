@@ -6,7 +6,7 @@ import com.example.criptobitsoproyectwz.data.room.toDatabase
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import javax.inject.Inject
 
-class UseCaseCripto @Inject constructor(private val repository: CriptoRepository) {
+class CriptoUseCase @Inject constructor(private val repository: CriptoRepository) {
 
     suspend operator fun invoke(): List<Cripto> {
         val cripto = repository.getAllCriptos()

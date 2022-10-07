@@ -2,14 +2,15 @@ package com.example.criptobitsoproyectwz.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.example.criptobitsoproyectwz.data.repository.CriptoRepository
+import javax.inject.Inject
 
-object CoreUtil {
-    var context: Context? = null
+class CoreUtil @Inject constructor(private val context: Context){
 
     fun checkNetworkStatus(): Boolean {
         var isWifiConnect: Boolean = false
         var isMobileConnet: Boolean = false
-        context?.let {
+        context.let {
             val manager = it.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             manager.allNetworks.forEach { network ->
                 manager.getNetworkInfo(network)?.apply {

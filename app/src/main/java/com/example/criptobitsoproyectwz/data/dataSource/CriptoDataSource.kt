@@ -4,7 +4,7 @@ import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
 
-interface criptoDataSource {
+interface CriptoDataSource {
     suspend fun getAllCriptos(): BaseResult
 
     suspend fun getCripto(cripto: String): TicketResult
