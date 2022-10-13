@@ -27,9 +27,9 @@ interface CriptoDao {
     @Query("DELETE FROM criptoCoin_entity")
     suspend fun deleteCoinCripto()
 
-/*    @Query("SELECT * FROM inCoin_entity")
-    suspend fun getInfoCriptos(): List<InCriptoCoinEntity>
-
+/*   @Query("SELECT * FROM inCoin_entity")
+    suspend fun getInfoCriptos(): List<AskEntity>*/
+/*
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertInfoCripto(criptoEntity: List<InCriptoCoinEntity>)
 

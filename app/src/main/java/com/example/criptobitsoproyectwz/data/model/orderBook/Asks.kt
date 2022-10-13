@@ -7,3 +7,4 @@ data class Asks(
     @SerializedName("price") val price: Double,
     @SerializedName("amount") val amount: Double
 )
+

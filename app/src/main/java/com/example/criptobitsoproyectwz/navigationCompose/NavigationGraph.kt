@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.criptobitsoproyectwz.core.CriptoResult
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import com.example.criptobitsoproyectwz.ui.view.CriptoScreen
 import com.example.criptobitsoproyectwz.ui.view.DetallesScreen
@@ -14,7 +15,7 @@ import com.example.criptobitsoproyectwz.ui.viewModel.ViewModelInfoCripto
 
 @Composable
 fun NavigationGraph(
-    criptos: List<Cripto>,
+    criptos: CriptoResult<List<Cripto>>,
     viewModel: ViewModelGetCripto,
     viewModel3: ViewModelInfoCripto
 ) {

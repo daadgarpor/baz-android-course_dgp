@@ -4,11 +4,14 @@ import com.example.criptobitsoproyectwz.data.dataSource.CriptoDataSource
 import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class CriptosClient @Inject constructor(private val criptoService: BitsoService) : CriptoDataSource {
 
     override suspend fun getAllCriptos(): BaseResult = criptoService.getCriptos()
+
+    override fun getCriptosRX(): Single<BaseResult> = criptoService.getCriptosRx()
 
     override suspend fun getCripto(cripto: String): TicketResult = criptoService.getTicketInformation(cripto)
 

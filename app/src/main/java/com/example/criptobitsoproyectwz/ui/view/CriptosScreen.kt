@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.criptobitsoproyectwz.navigationCompose.Rutas
 import com.example.criptobitsoproyectwz.R
+import com.example.criptobitsoproyectwz.core.CriptoResult
 import com.example.criptobitsoproyectwz.util.Convert
 import com.example.criptobitsoproyectwz.data.model.CriptoImage
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
@@ -23,8 +24,11 @@ import java.text.NumberFormat
 import java.util.*
 
 @Composable
-fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
+fun CriptoScreen(navController: NavHostController, criptos: CriptoResult<List<Cripto>>) {
     val imagelogo = painterResource(R.drawable.bitso)
+    
+    
+    
     Column {
         Card(
             elevation = 4.dp,
@@ -38,26 +42,40 @@ fun CriptoScreen(navController: NavHostController, criptos: List<Cripto>) {
             Image(painter = imagelogo, contentDescription = null)
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            if (criptos.isEmpty()) {
-                item {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(50.dp, 50.dp)
-                    )
+        when(criptos){
+            is CriptoResult.Loading->{
+
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(50.dp, 50.dp)
+                )
+            }
+            
+            is CriptoResult.Succes ->{
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    if (criptos.data.isEmpty()) {
+                        item {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(50.dp, 50.dp)
+                            )
+                        }
+                    }
+                    items(criptos.data) { cripto ->
+                        CriptoCard(cripto, navController)
+                    }
                 }
             }
-            items(criptos) { cripto ->
-                CriptoCard(cripto, navController)
+            is CriptoResult.Failure ->{
+                Text(text = "${criptos.exception}")
             }
         }
     }
-
 }
 
 @Composable

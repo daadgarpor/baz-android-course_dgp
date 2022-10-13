@@ -53,7 +53,8 @@ fun DetallesScreen(
             )
         } else {
             CardDetalle(cripto, info)
-           // OtraFORMA(cripto = cripto, viewModel3)
+            titles()
+            OtraFORMA(cripto = cripto, viewModel3)
         }
     }
 }
@@ -222,6 +223,11 @@ fun CardDetalle(cripto: String, info: CriptoCoin) {
         }
     }
 
+
+}
+
+@Composable
+private fun titles() {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,

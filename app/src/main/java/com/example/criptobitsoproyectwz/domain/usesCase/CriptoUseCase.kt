@@ -19,8 +19,4 @@ class CriptoUseCase @Inject constructor(private val repository: CriptoRepository
         }
     }
 
-  /*  suspend fun useCaseInfoCripto(crip: String): TicketResult? = CriptoRepository().getInfoTicker(crip)
-
-
-    suspend fun useCaseAskBids(crip: String): BaseBookOrder? = CriptoRepository().getBidsAsk(crip)*/
 }

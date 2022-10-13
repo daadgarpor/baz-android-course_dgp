@@ -6,11 +6,10 @@ import com.example.criptobitsoproyectwz.data.dataSource.CriptoDataSource
 import com.example.criptobitsoproyectwz.data.model.criptos.BaseResult
 import com.example.criptobitsoproyectwz.data.model.orderBook.BaseBookOrder
 import com.example.criptobitsoproyectwz.data.model.ticket.TicketResult
+import com.example.criptobitsoproyectwz.data.room.AskEntity
 import com.example.criptobitsoproyectwz.data.room.CriptoCoinEntity
-import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
-import com.example.criptobitsoproyectwz.domain.wrapper.CriptoCoin
-import com.example.criptobitsoproyectwz.domain.wrapper.InfoCriptoCoin
-import com.example.criptobitsoproyectwz.domain.wrapper.toDomain
+import com.example.criptobitsoproyectwz.domain.wrapper.*
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class CriptoRepositoryImpl @Inject constructor(
@@ -22,6 +21,12 @@ class CriptoRepositoryImpl @Inject constructor(
         val response: BaseResult = remoteDataSource.getAllCriptos()
         return response.payload.map { it.toDomain() }
     }
+
+    override fun getCriptosRx(): Single<List<Cripto>> {
+        val response: Single<BaseResult> = remoteDataSource.getCriptosRX()
+        return response.map { list -> list.payload.map { it.toDomain() }}
+    }
+
 
     override suspend fun getCripto(cripto: String): CriptoCoin {
         val response: TicketResult = remoteDataSource.getCripto(cripto)
@@ -58,16 +63,5 @@ class CriptoRepositoryImpl @Inject constructor(
     override suspend fun deleteCriptoCoin() = criptoDao.deleteCoinCripto()
 
 
- /*   override suspend fun getInfoCriptoCoin(): List<InfoCriptoCoin> {
-        val response : List<InCriptoCoinEntity> = criptoDao.getInfoCriptos()
-        return response.map { it.toDomain() }
-    }
-
-    override suspend fun insertInfoCriptoCoin(criptoEntity: List<InCriptoCoinEntity>) {
-        criptoDao.insertInfoCripto(criptoEntity)
-    }
-
-    override suspend fun deleteInfoCriptoCoin() = criptoDao.deleteInfoCripto()
-*/
 
 }

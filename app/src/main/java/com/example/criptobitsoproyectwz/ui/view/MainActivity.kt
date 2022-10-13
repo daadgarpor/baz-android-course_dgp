@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
 import com.example.criptobitsoproyectwz.navigationCompose.NavigationGraph
 import com.example.criptobitsoproyectwz.R
+import com.example.criptobitsoproyectwz.core.CriptoResult
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
-import com.example.criptobitsoproyectwz.util.CoreUtil
 import com.example.criptobitsoproyectwz.ui.viewModel.ViewModelCripto
 import com.example.criptobitsoproyectwz.ui.viewModel.ViewModelGetCripto
 import com.example.criptobitsoproyectwz.ui.viewModel.ViewModelInfoCripto
@@ -29,17 +29,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            viewModelCripto.getCriptos()
-            val criptos by viewModelCripto.criptos.collectAsState()
+       /*     viewModelCripto.getCriptos()
+            val criptos by viewModelCripto.criptos.collectAsState()*/
+
+            viewModelCripto.getCriptoRx()
+            val criptosRx by viewModelCripto.criptoRx.collectAsState()
+
             val viewModel = ViewModelProvider(this)[ViewModelGetCripto::class.java]
             val viewModel3 = ViewModelProvider(this)[ViewModelInfoCripto::class.java]
-            CriptoApp(criptos, viewModel, viewModel3)
+            CriptoApp(criptosRx, viewModel, viewModel3)
         }
     }
 
     @Composable
     private fun CriptoApp(
-        criptos: List<Cripto>,
+        criptos: CriptoResult<List<Cripto>>,
         viewModel: ViewModelGetCripto,
         viewModel3: ViewModelInfoCripto
     ) {
