@@ -35,9 +35,9 @@ class MainActivity : ComponentActivity() {
             viewModelCripto.getCriptoRx()
             val criptosRx by viewModelCripto.criptoRx.collectAsState()
 
-            val viewModel = ViewModelProvider(this)[ViewModelGetCripto::class.java]
-            val viewModel3 = ViewModelProvider(this)[ViewModelInfoCripto::class.java]
-            CriptoApp(criptosRx, viewModel, viewModel3)
+            val infoCriptoVM = ViewModelProvider(this)[ViewModelGetCripto::class.java]
+            val bidsAsksVM = ViewModelProvider(this)[ViewModelInfoCripto::class.java]
+            CriptoApp(criptosRx, infoCriptoVM, bidsAsksVM)
         }
     }
 

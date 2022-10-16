@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class GetInfoCriptoUseCase @Inject constructor(private val repository: CriptoRepository) {
 
-    suspend fun getDataCripto(cripto: String): InfoCriptoCoin = repository.getInfoCripto(cripto)
+    suspend operator fun invoke(cripto: String): InfoCriptoCoin = repository.getInfoCripto(cripto)
 
 }

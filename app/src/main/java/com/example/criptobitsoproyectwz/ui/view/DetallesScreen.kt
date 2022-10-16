@@ -54,13 +54,13 @@ fun DetallesScreen(
         } else {
             CardDetalle(cripto, info)
             titles()
-            OtraFORMA(cripto = cripto, viewModel3)
+            AskBidds(cripto = cripto, viewModel3)
         }
     }
 }
 
 @Composable
-fun OtraFORMA(cripto: String, viewModel3: ViewModelInfoCripto) {
+fun AskBidds(cripto: String, viewModel3: ViewModelInfoCripto) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,

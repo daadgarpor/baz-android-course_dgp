@@ -31,7 +31,7 @@ class ViewModelInfoCripto  @Inject constructor(
     fun getDataCripto(cripto: String) {
         viewModelScope.launch {
 
-                val result = getCriptoDataGetUseCase.getDataCripto(cripto)
+                val result = getCriptoDataGetUseCase.invoke(cripto)
                 _infoCripto.value = result
 
         }

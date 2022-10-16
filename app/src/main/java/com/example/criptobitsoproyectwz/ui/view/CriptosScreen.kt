@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import com.example.criptobitsoproyectwz.navigationCompose.Rutas
 import com.example.criptobitsoproyectwz.R
 import com.example.criptobitsoproyectwz.core.CriptoResult
-import com.example.criptobitsoproyectwz.util.Convert
 import com.example.criptobitsoproyectwz.data.model.CriptoImage
 import com.example.criptobitsoproyectwz.domain.wrapper.Cripto
 import java.text.NumberFormat
@@ -110,7 +109,7 @@ fun CriptoCard(cripto: Cripto, navController: NavHostController) {
             )
             Column(Modifier.padding(8.dp)) {
                 Text(
-                    text = cripto.name.Convert(),
+                    text = cripto.name.uppercase(),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier
                         .padding(bottom = 8.dp)
